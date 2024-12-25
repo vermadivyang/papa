@@ -23,7 +23,7 @@ def generate_response(prompt):
     outputs = model.generate(
         inputs,
         attention_mask=attention_mask,
-        max_length=150,
+        max_length=50,  # Reduce max length
         num_return_sequences=1,
         no_repeat_ngram_size=2,
         temperature=0.7,
@@ -32,6 +32,7 @@ def generate_response(prompt):
         do_sample=True,
         pad_token_id=tokenizer.eos_token_id,
     )
+
 
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return response
