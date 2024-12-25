@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DadBot Chat</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="chat-container">
+        <h1>DadBot Chat</h1>
+        <div id="chat-box">
+            <div class="message bot-message">
+                Welcome to DadBot! Ask me anything, or just chat with me.
+            </div>
+        </div>
+        <form id="chat-form">
+            <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off" />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const chatForm = document.getElementById('chat-form');
+        const chatBox = document.getElementById('chat-box');
+        const userInput = document.getElementById('user-input');
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = userInput.value.trim();
+            if (!input) return;
+
+            // Append user message to chat box
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user-message');
+            userMessage.textContent = input;
+            chatBox.appendChild(userMessage);
+
+            // Clear input field
+            userInput.value = '';
+
+            // Call the backend API
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_input: input }),
+                });
+                const data = await response.json();
+
+                // Append bot response to chat box
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('message', 'bot-message');
+                botMessage.textContent = data.response;
+                chatBox.appendChild(botMessage);
+
+                // Scroll to the latest message
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
