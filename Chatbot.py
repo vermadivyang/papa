@@ -5,7 +5,7 @@ import torch
 app = Flask(__name__)
 
 # Load GPT-2 model and tokenizer
-model_name = "gpt2"
+model_name = "distilgpt2"
 model = GPT2LMHeadModel.from_pretrained(model_name)
 tokenizer = GPT2Tokenizer.from_pretrained(model_name)
 
