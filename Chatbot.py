@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import torch
+import os
+
 
 app = Flask(__name__)
 
@@ -48,9 +50,6 @@ def chat():
     user_input = request.json.get("user_input", "")
     response = generate_response(user_input)
     return jsonify({"response": response})
-
-if __name__ == "__main__":
-import os
 
 # Update to use dynamic port binding
 if __name__ == "__main__":
