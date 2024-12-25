@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, jsonify
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import torch
+
 import os
+from flask import Flask, render_template, request, jsonify
 
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
-app = Flask(__name__)
 
 # Load GPT-2 model and tokenizer
 model_name = "distilgpt2"
